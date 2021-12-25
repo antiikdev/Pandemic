@@ -4,14 +4,16 @@
 package pandemic;
 
 /**
- * Simplified simulation of virus spreading
+ * Pandemic - simplified simulation of virus spreading
+ * Sources (math) inspired by Shen & Bar-Yam. 2020. Pandemic math:
+ * Stopping outbreaks, New England Complex Systems Institute.
  * @author AntiikDev
  * @version 25 Dec 2021
  *
  */
 public class Pandemic {
 	
-	// Matrix of "people" where 0 is no infection and 1 infected
+	// Matrix of "people" where 0 is healthy and 1 infected by virus
 	static int[][] people = {
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -24,6 +26,7 @@ public class Pandemic {
 
 	
 	/**
+	 * Crates a random number between [0,1]
 	 * @return random double number between [0,1]
 	 */
 	public static double createRandomInfection() {
@@ -99,11 +102,14 @@ public class Pandemic {
 		int infectionsTotal = 0;
 		int populationsInfected = 0;
 		
-		// setSizeOfPopulation(); // TODO: size of population		
+		// setSizeOfPopulation(); // TODO: ask user size of population		
 		// createVirus(); // TODO: create Virus-class with infection rate
-		// setFirstInfections(); // TODO: decide how many persons get infected in Day 1
+			// TODO: check concepts and naming, e.g. R-number
+			// TODO: add prob. and number of deaths, injuries and intensive care
+		// setFirstInfections(); // TODO: ask user how many persons gets infected in Day 1
 		// printVirusSpreading(); // print Day 1 population and infections
 		
+		// TODO: a menu for the user to decide if one or many games are played
 		// Infect populations until x (infectiosnTotal) number of infected in population
 		// infectionsTotal = spreadVirus();
 		while ( infectionsTotal < populationSize ) {
@@ -115,6 +121,6 @@ public class Pandemic {
 		System.out.println("Total number of infections: " + infectionsTotal);
 		System.out.println("Number of populations infected: " + populationsInfected);
 		printVirusSpreading();
+		// TODO: print picture of number of cases spreding
 	}
-
 }
