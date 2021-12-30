@@ -6,7 +6,7 @@ package pandemic;
 /**
  * Sample class represents a population where the virus spreads
  * in days and groups and therefore causes pandemic.
- * @author antiik.dev
+ * @author antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
  */
 public class Sample {
@@ -43,6 +43,19 @@ public class Sample {
 			groupMembers = maxSize;
 		}
 		sampleTable = new int[groupMembers][days];
+		initializeSample();
+	}
+	
+	
+	/**
+	 * Initializes two-dimensional array's values with number 0
+	 */
+	public void initializeSample() {
+		for (int r = 0; r < sampleTable.length; r++) {
+			for (int c = 0; c < sampleTable[0].length; c++) {
+				sampleTable[r][c] = 0;
+			}
+		}
 	}
 	
 	
@@ -62,6 +75,37 @@ public class Sample {
 	 */
 	public int getDays() {
 		return this.sampleTable[0].length;
+	}
+	
+	
+	/**
+	 * Members interacting per day in population
+	 * @return number of members per day
+	 */
+	public int getMembers() {
+		return sampleTable.length;
+	}
+	
+	
+	/**
+	 * Sample table's value in i
+	 * @param r row
+	 * @param c column
+	 * @return value in table i
+	 */
+	public int tableValue(int r, int c) {
+		return this.sampleTable[r][c];
+	}
+	
+	
+	/**
+	 * Sets table value
+	 * @param r row
+	 * @param c column
+	 * @param n number to set (0 healthy, 1 infected)
+	 */
+	public void setTableValue(int r, int c, int n) {
+		this.sampleTable[r][c] = n;
 	}
 	
 	

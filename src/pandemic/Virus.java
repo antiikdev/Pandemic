@@ -5,7 +5,7 @@ package pandemic;
 
 /**
  * Virus class represents a virus that causes the pandemic
- * @author antiik.dev
+ * @author antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
  */
 public class Virus {
@@ -32,6 +32,15 @@ public class Virus {
 		this.name = name;
 		if (rate < 0 || rate > 100) return; // use default initialization
 		this.infectionRate = rate / 100.0; // percentages
+	}
+	
+	
+	/**
+	 * Gets infection rate of the virus
+	 * @return virus infection rate
+	 */
+	public double getInfectionRate() {
+		return this.infectionRate;
 	}
 	
 	
