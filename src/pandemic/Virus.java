@@ -44,6 +44,16 @@ public class Virus {
 	}
 	
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	public void initializeVirus(int infectionRate) {
+		this.infectionRate = infectionRate;
+	}
+	
+	
 	/**
 	 * Attributes to String format
 	 */

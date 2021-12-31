@@ -1,4 +1,4 @@
-// TODO: ADD how many persons gets infected in Day1
+// TODO: FIX infection spreading
 
 package pandemic;
 
@@ -65,16 +65,6 @@ public class Pandemic {
 	
 	
 	/**
-	 * Prints pandemic results
-	 * @param s sample
-	 * @param infections total occured
-	 */
-	public static void printResults(Sample s, int infections) {
-		// TODO: finish if needed
-	}
-	
-	
-	/**
 	 * Prints program instructions for the user
 	 */
 	public static void printInstructions() {
@@ -86,42 +76,45 @@ public class Pandemic {
 	
 	/**
 	 * Creates a new sample of animals/humans for the pandemic
-	 * @return created sample
 	 */
-	public static Sample createSample() {
+	public static void createSample(Sample sample) {
 		Scanner in = new Scanner(System.in);
-		String name, days, members;
+		String name, days, members, infected;
 		
 		System.out.print("Write name of the sample (e.g. Village) >");
 		name = in.nextLine().trim();
+		sample.setName(name);
+		
 		System.out.print("Write how many days does the pandemic last (min.3, max.30) >");
 		days = in.nextLine().trim();
-		int d = Integer.parseInt(days);
+		int d = Integer.parseInt(days);		
 		System.out.print("Write how many members in contact daily (min.3, max.30) >");
 		members = in.nextLine().trim();
 		int m = Integer.parseInt(members);
-		
-		Sample sample = new Sample(name, d, m);
-		return sample;
+		System.out.print("Write how many members gets infected in Day 1? (max. " +
+							m + ") >");
+		infected = in.nextLine().trim();
+		int i = Integer.parseInt(infected);
+		sample.setTable(d,m, i);
 	}
 	
 	
 	/**
 	 * Creates a new virus
-	 * @return created virus
 	 */
-	public static Virus createVirus() {
+	public static void createVirus(Virus virus) {
 		Scanner in = new Scanner(System.in);
 		String name, rate;
 		
 		System.out.print("Write a virus name >");
 		name = in.nextLine().trim();
+		virus.setName(name);
+		
 		System.out.print("Write infection rate for the virus " +
 					"in percentages (%) (e.g. 20) >");
 		rate = in.nextLine().trim();
 		int r = Integer.parseInt(rate);
-		Virus virus = new Virus(name, r);
-		return virus;
+		virus.initializeVirus(r);
 	}
 	
 	
@@ -136,6 +129,7 @@ public class Pandemic {
 		int infectionsTotal = 0;
 		int populationsInfected = 0;
 		
+		// While: how many infections required before stopping pandemics
 		while ( infectionsTotal < populationSize ) {
 			infectionsTotal = spreadVirus(s, v);
 			populationsInfected++;
@@ -145,16 +139,16 @@ public class Pandemic {
 		System.out.println("Total number of infections: " + infectionsTotal);
 		System.out.println("Number of populations infected: " + populationsInfected);
 		s.printSample();
-		pressKeyToContinue();
+		pressEnterToContinue();
 	}
 	
 	
 	/**
-	 * Press any key to continue
+	 * Asks user to press Enter key to continue...
 	 */
-	 private static void pressKeyToContinue()
+	 private static void pressEnterToContinue()
 	 { 
-	        System.out.println("Press Any key to continue...");
+	        System.out.println("Press Enter key to continue...");
 	        try {
 	            System.in.read();
 	        } catch(Exception ex) {
@@ -187,14 +181,15 @@ public class Pandemic {
 				printInstructions();
 				return true;
 			case "2":
-				sample = createSample();
+				createSample(sample);
 				return true;
 			case "3":
-				virus = createVirus();
+				createVirus(virus);
 				return true;
 			case "4":
 				// TODO: if sample and virus are not initialized
-				spreadVirus(sample, virus);
+				int infections = spreadVirus(sample, virus);
+				printResults(sample, infections);
 				return true;
 			case "5":
 				// TODO: if sample and virus are not initialized
@@ -218,6 +213,21 @@ public class Pandemic {
 		} catch (Exception ex) {
 			System.out.println("Error:" + ex);
 		}
+	}
+	
+	
+	/**
+	 * Prints one pandemic matrix results
+	 * @param s sample
+	 * @param infections total occured
+	 */
+	public static void printResults(Sample s, int infections) {
+		int populationSize = s.getPopulationSize();
+		
+		System.out.println("Population size: " + populationSize);
+		System.out.println("Total number of infections: " + infections);
+		s.printSample();
+		pressEnterToContinue();
 	}
 	
 	

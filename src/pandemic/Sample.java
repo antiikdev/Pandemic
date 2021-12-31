@@ -32,8 +32,10 @@ public class Sample {
 	 * @param days of the sample
 	 * @param groupMembers of the sample
 	 */
-	public Sample(String name, int days, int groupMembers) {
+	public Sample(String name, int days, int groupMembers, int infected) {
 		this.name = name;
+		// TODO: Min and max values
+		/*
 		if ( days < minSize || groupMembers < minSize ) {
 			days = minSize;
 			groupMembers = minSize;
@@ -42,18 +44,25 @@ public class Sample {
 			days = maxSize;
 			groupMembers = maxSize;
 		}
+		*/
 		sampleTable = new int[groupMembers][days];
-		initializeSample();
+		initializeSample(infected);
 	}
 	
 	
 	/**
 	 * Initializes two-dimensional array's values with number 0
+	 * @param infected number of members infected in Day 1
 	 */
-	public void initializeSample() {
+	public void initializeSample(int infected) {
+		int numberOfInfected = 0;
 		for (int r = 0; r < sampleTable.length; r++) {
 			for (int c = 0; c < sampleTable[0].length; c++) {
 				sampleTable[r][c] = 0;
+				if ( c == 0 && numberOfInfected <= infected ) {
+					sampleTable[r][c] = 1;
+					numberOfInfected++;
+				}
 			}
 		}
 	}
@@ -109,6 +118,17 @@ public class Sample {
 	}
 	
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	public void setTable(int d, int m, int infected) {
+		sampleTable = new int[m][d];
+		initializeSample(infected);
+	}
+	
+	
 	/**
 	 * Prints two-dimensional array's numbers
 	 */
@@ -138,8 +158,8 @@ public class Sample {
 	 */
 	public static void main(String[] args) {
 		Sample monkeys = new Sample();
-										// name, days, group size
-		Sample population = new Sample("Village", 5, 6);
+								// name, days, group size, infected day1
+		Sample population = new Sample("Village", 7, 7, 3);
 		
 		System.out.println(monkeys.toString());
 		monkeys.printSample();
