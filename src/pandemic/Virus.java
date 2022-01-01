@@ -44,13 +44,30 @@ public class Virus {
 	}
 	
 	
+	/**
+	 * Gets virus name
+	 * @return virus name
+	 */
+	public String getName() {
+		return this.name;
+	}
+	
+	
+	/**
+	 * Sets virus name
+	 * @param name of the virus
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
 	
+	/**
+	 * Initializes virus's infection rate
+	 * @param infectionRate of the virus
+	 */
 	public void initializeVirus(int infectionRate) {
-		this.infectionRate = infectionRate;
+		this.infectionRate = infectionRate / 100.0;
 	}
 	
 	
@@ -68,7 +85,7 @@ public class Virus {
 	 */
 	public static void main(String[] args) {
 		Virus ebola = new Virus();
-		Virus corona = new Virus("covid", 30);
+		Virus corona = new Virus("Covid", 30);
 		
 		System.out.println(ebola.toString());
 		System.out.println(corona.toString());

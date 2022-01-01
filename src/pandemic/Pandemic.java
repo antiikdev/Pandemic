@@ -1,5 +1,3 @@
-// TODO: FIX infection spreading
-
 package pandemic;
 
 import java.util.Scanner;
@@ -11,7 +9,13 @@ import java.util.Scanner;
  * Available online: https://necsi.edu/pandemic-math
  * @author antiik.dev; https://github.com/antiikdev
  * @version 25 Dec 2021
- *
+ */
+/** 
+ * TODO: Ideas to continue the development:
+ * - check concepts and naming, e.g. math of R-number
+ * - add prob. and number of deaths, injuries and intensive care
+ * - randomize a new virus with a random infection rate
+ * - print picture of number of cases spreding
  */
 public class Pandemic {
 	
@@ -39,11 +43,11 @@ public class Pandemic {
 		
 		// Create infections
 		for (int r = 0; r < rowL; r++) {
-			for (int c = 1; c <columnL; c++) {
-				// Horizontal infection spreading in the matrix with previous person 
+			for (int c = 1; c < columnL; c++) {
 				
+				// Horizontal infection spreading in the matrix with previous person 
 				if (s.tableValue(r, c-1) == 1) {
-					// Create a new random prob. infection to compare
+					// Create a new random prob. infection to compare if infection happen
 					infection = createRandomInfection();
 					if ( infection < infectionRate ) {
 						s.setTableValue(r, c, 1);
@@ -85,17 +89,18 @@ public class Pandemic {
 		name = in.nextLine().trim();
 		sample.setName(name);
 		
-		System.out.print("Write how many days does the pandemic last (min.3, max.30) >");
+		System.out.print("Write how many days does the pandemic last (min.3, max.13) >");
 		days = in.nextLine().trim();
 		int d = Integer.parseInt(days);		
-		System.out.print("Write how many members in contact daily (min.3, max.30) >");
+		System.out.print("Write how many members in contact daily (min.3, max.13) >");
 		members = in.nextLine().trim();
 		int m = Integer.parseInt(members);
-		System.out.print("Write how many members gets infected in Day 1? (max. " +
+		System.out.print("Write how many members get infected in Day 1? (max. " +
 							m + ") >");
 		infected = in.nextLine().trim();
 		int i = Integer.parseInt(infected);
-		sample.setTable(d,m, i);
+		
+		sample.setTable(d, m, i);
 	}
 	
 	
@@ -111,7 +116,7 @@ public class Pandemic {
 		virus.setName(name);
 		
 		System.out.print("Write infection rate for the virus " +
-					"in percentages (%) (e.g. 20) >");
+					"in percentages (%) (e.g. 50) >");
 		rate = in.nextLine().trim();
 		int r = Integer.parseInt(rate);
 		virus.initializeVirus(r);
@@ -138,6 +143,8 @@ public class Pandemic {
 		System.out.println("Population size: " + populationSize);
 		System.out.println("Total number of infections: " + infectionsTotal);
 		System.out.println("Number of populations infected: " + populationsInfected);
+		System.out.println(v.getName() + " virus's infection rate: " +
+				v.getInfectionRate());
 		s.printSample();
 		pressEnterToContinue();
 	}
@@ -155,57 +162,11 @@ public class Pandemic {
 	        	System.out.println("Error: " + ex);
 	        }
 	 }
-	
-	
-	/**
-	 * Menu UI for user selection
-	 * @return true if continue to use, false if exit
-	 */
-	public static boolean menuSelect(Sample sample, Virus virus) {
-		// Clear console in Java:
-		cls();
-		System.out.println(sample.getPopulationSize());
-		System.out.println("- Pandemic - simple simulation -");
-		System.out.println("1) Instructions");
-		System.out.println("2) Create a new sample of animals/humans");
-		System.out.println("3) Create a new virus");
-		System.out.println("4) Start one pandemic");
-		System.out.println("5) Start pandemics until extinction");
-		System.out.println("6) Exit");
-		System.out.print("Write option number and press Enter-key >");
-		
-		// Scanner to read user input
-		Scanner in = new Scanner(System.in);
-		switch (in.nextLine()) {
-			case "1":
-				printInstructions();
-				return true;
-			case "2":
-				createSample(sample);
-				return true;
-			case "3":
-				createVirus(virus);
-				return true;
-			case "4":
-				// TODO: if sample and virus are not initialized
-				int infections = spreadVirus(sample, virus);
-				printResults(sample, infections);
-				return true;
-			case "5":
-				// TODO: if sample and virus are not initialized
-				spreadVirusExtinction(sample, virus);
-				return true;
-			case "6":
-				return false;
-			default:
-				return true;
-		}
-	}
-	
-	
+	 
+	 
 	/**
 	 * Clear command line screen (Java)
-	 * Method from Youtube channel Ubuntu Tricks
+	 * Method from Youtube channel "Ubuntu Tricks", Stackoverflow "J. Bosboom"
 	 */
 	public static void cls() {
 		try {
@@ -221,40 +182,70 @@ public class Pandemic {
 	 * @param s sample
 	 * @param infections total occured
 	 */
-	public static void printResults(Sample s, int infections) {
+	public static void printResults(Sample s, Virus v, int infections) {
 		int populationSize = s.getPopulationSize();
 		
 		System.out.println("Population size: " + populationSize);
 		System.out.println("Total number of infections: " + infections);
+		System.out.println(v.getName() + " virus's infection rate: " +
+					v.getInfectionRate());
 		s.printSample();
 		pressEnterToContinue();
 	}
 	
 	
 	/**
-	 * Main program for testing
+	 * Menu UI for user selection
+	 * @return true if continue to use, false if exit
+	 */
+	public static boolean menuSelect() {
+		// TODO: Clear console in Java not working properly
+		cls();
+		System.out.println(" Pandemic - simple simulation -");
+		System.out.println("1) Instructions");
+		System.out.println("2) Start one pandemic");
+		System.out.println("3) Start pandemics until extinction");
+		System.out.println("4) Exit");
+		System.out.print("Write option number and press Enter-key >");
+		
+		// Scanner to read user input
+		Scanner in = new Scanner(System.in);
+		switch (in.nextLine()) {
+			case "1": // instructions
+				printInstructions();
+				return true;
+			case "2": // start one pandemic
+				Sample sample = new Sample();
+				Virus virus = new Virus();
+				createSample(sample);
+				createVirus(virus);
+				int infections = spreadVirus(sample, virus);
+				printResults(sample, virus, infections);
+				return true;
+			case "3": // Start pandemics until extinction
+				Sample sample2 = new Sample();
+				Virus virus2 = new Virus();
+				createSample(sample2);
+				createVirus(virus2);
+				spreadVirusExtinction(sample2, virus2);
+				return true;
+			case "4": // exit
+				return false;
+			default:
+				return true;
+		}
+	}
+	
+	
+	/**
+	 * Main to start the program
 	 * @param args not in use
 	 */
 	public static void main(String[] args) {
-		Sample sample = new Sample();
-		Virus virus = new Virus();
-		
 		boolean menu = true;
 		while (menu) {
-			menu = menuSelect(sample, virus);
+			menu = menuSelect();
 		}
-		
-		// setSizeOfPopulation(); // TODO: ask user size of population		
-		// createVirus(); // TODO: create Virus-class with infection rate
-			// TODO: check concepts and naming, e.g. R-number
-			// TODO: add prob. and number of deaths, injuries and intensive care
-		// setFirstInfections(); // TODO: ask user how many persons gets infected in Day 1
-		// printVirusSpreading(); // print Day 1 population and infections
-		
-		// TODO: a menu for the user to decide if one or many games are played
-		// TODO: randomize a new virus with a random infection rate
-
-		
-		// TODO: print picture of number of cases spreding
 	}
+	
 }

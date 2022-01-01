@@ -6,6 +6,12 @@ package pandemic;
 /**
  * Sample class represents a population where the virus spreads
  * in days and groups and therefore causes pandemic.
+ * <EXAMPLE>
+ * table = { 
+ * {0, 0, 0, 0},
+ * {0, 0, 0, 0},
+ * {0, 0, 0, 0} };
+ * </EXAMPLE>
  * @author antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
  */
@@ -13,7 +19,7 @@ public class Sample {
 	
 	private String name = "Unknown sample";
 	private final static int minSize = 3;
-	private final static int maxSize = 30;
+	private final static int maxSize = 13;
 	// Matrix of "people" where 0 is healthy and 1 infected by virus
 	private int[][] sampleTable;
 
@@ -34,8 +40,6 @@ public class Sample {
 	 */
 	public Sample(String name, int days, int groupMembers, int infected) {
 		this.name = name;
-		// TODO: Min and max values
-		/*
 		if ( days < minSize || groupMembers < minSize ) {
 			days = minSize;
 			groupMembers = minSize;
@@ -44,7 +48,6 @@ public class Sample {
 			days = maxSize;
 			groupMembers = maxSize;
 		}
-		*/
 		sampleTable = new int[groupMembers][days];
 		initializeSample(infected);
 	}
@@ -55,13 +58,27 @@ public class Sample {
 	 * @param infected number of members infected in Day 1
 	 */
 	public void initializeSample(int infected) {
+		day1Infections(infected);
+		for (int r = 0; r < sampleTable.length; r++) {
+			for (int c = 1; c < sampleTable[0].length; c++) {
+				sampleTable[r][c] = 0;
+				}
+			}
+	}
+	
+	
+	/**
+	 * Sets tabbles infections in day 1
+	 * @param infected in day 1
+	 */
+	public void day1Infections(int infected) {
 		int numberOfInfected = 0;
 		for (int r = 0; r < sampleTable.length; r++) {
-			for (int c = 0; c < sampleTable[0].length; c++) {
-				sampleTable[r][c] = 0;
-				if ( c == 0 && numberOfInfected <= infected ) {
-					sampleTable[r][c] = 1;
+			for (int c = 0; c < 1; c++) {
+				if ( numberOfInfected < infected ) {
+					sampleTable[r][0] = 1;
 					numberOfInfected++;
+					if ( r < sampleTable.length ) r++;
 				}
 			}
 		}
