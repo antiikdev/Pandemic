@@ -1,11 +1,8 @@
-/**
- * 
- */
 package pandemic;
 
 /**
  * Virus class represents a virus that causes the pandemic
- * @author antiik.dev; https://github.com/antiikdev
+ * @author www.antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
  */
 public class Virus {
@@ -19,7 +16,7 @@ public class Virus {
 	 */
 	public Virus() {
 		this.name = "unknown virus";
-		this.infectionRate = 0.2;
+		this.infectionRate = createRandomInfectionRate();
 	}
 	
 	
@@ -32,6 +29,15 @@ public class Virus {
 		this.name = name;
 		if (rate < 0 || rate > 100) return; // use default initialization
 		this.infectionRate = rate / 100.0; // percentages
+	}
+	
+	
+	/**
+	 * Crates a random number between [0,1]
+	 * @return random double number between [0,1]
+	 */
+	public static double createRandomInfectionRate() {
+		return Math.random();
 	}
 	
 	
@@ -67,6 +73,9 @@ public class Virus {
 	 * @param infectionRate of the virus
 	 */
 	public void initializeVirus(int infectionRate) {
+		if (infectionRate < 0 || infectionRate > 100) {
+			this.infectionRate = createRandomInfectionRate();
+		}
 		this.infectionRate = infectionRate / 100.0;
 	}
 	

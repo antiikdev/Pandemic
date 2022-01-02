@@ -3,19 +3,22 @@ package pandemic;
 import java.util.Scanner;
 
 /**
- * Pandemic - simplified simulation of virus spreading
- * Sources (math) inspired by Shen & Bar-Yam. 2020. Pandemic math:
- * Stopping outbreaks, New England Complex Systems Institute.
+ * Pandemic - simplified simulation of virus spreading in a small sample
+ * Source (math inspired by): Shen & Bar-Yam. 2020. "Pandemic math:
+ * Stopping outbreaks", New England Complex Systems Institute.
  * Available online: https://necsi.edu/pandemic-math
- * @author antiik.dev; https://github.com/antiikdev
- * @version 25 Dec 2021
+ * @author www.antiik.dev; https://github.com/antiikdev
+ * @version 29 Dec 2021
  */
 /** 
  * TODO: Ideas to continue the development:
  * - check concepts and naming, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
  * - randomize a new virus with a random infection rate
- * - print picture of number of cases spreding
+ * - print picture of number of cases spreding (non-linear)
+ * - develop spreadVirus-method which is now non-linear O(n^2) and therefore slow
+ * - add try-catches to new class creation methods
+ * - automated min. and max. values presentation in the UI
  */
 public class Pandemic {
 	
@@ -45,7 +48,7 @@ public class Pandemic {
 		for (int r = 0; r < rowL; r++) {
 			for (int c = 1; c < columnL; c++) {
 				
-				// Horizontal infection spreading in the matrix with previous person 
+				// Horizontal (x) infection spreading in the matrix with previous person 
 				if (s.tableValue(r, c-1) == 1) {
 					// Create a new random prob. infection to compare if infection happen
 					infection = createRandomInfection();
@@ -54,8 +57,16 @@ public class Pandemic {
 						numberInfections++;
 						}
 					}
-				// Sideways infection spreading with in the matrix
+				// Sideways infection spreading within the matrix
 				if (r != 0 && s.tableValue(r-1, c-1) == 1) {
+					infection = createRandomInfection();
+					if ( infection < infectionRate ) {
+						s.setTableValue(r, c, 1);
+						numberInfections++;
+					}
+				}
+				// vertical (y) infection spreading within the matrix
+				if (r != 0 && s.tableValue(r-1, c) == 1) {
 					infection = createRandomInfection();
 					if ( infection < infectionRate ) {
 						s.setTableValue(r, c, 1);
@@ -85,18 +96,23 @@ public class Pandemic {
 		Scanner in = new Scanner(System.in);
 		String name, days, members, infected;
 		
+		cls();
 		System.out.print("Write name of the sample (e.g. Village) >");
 		name = in.nextLine().trim();
 		sample.setName(name);
 		
-		System.out.print("Write how many days does the pandemic last (min.3, max.13) >");
+		System.out.print("Write how many days does the pandemic last " +
+			"(min." + sample.getMinSize() + ", max."+ sample.getMaxSize() + ") >");
 		days = in.nextLine().trim();
-		int d = Integer.parseInt(days);		
-		System.out.print("Write how many members in contact daily (min.3, max.13) >");
+		int d = Integer.parseInt(days);
+		
+		System.out.print("Write how many members in contact daily " +
+				"(min." + sample.getMinSize() + ", max."+ sample.getMaxSize() + ") >");
 		members = in.nextLine().trim();
 		int m = Integer.parseInt(members);
+		
 		System.out.print("Write how many members get infected in Day 1? (max. " +
-							m + ") >");
+							m/2 + ") >"); // m/2 as only every second infected
 		infected = in.nextLine().trim();
 		int i = Integer.parseInt(infected);
 		
@@ -111,6 +127,7 @@ public class Pandemic {
 		Scanner in = new Scanner(System.in);
 		String name, rate;
 		
+		cls();
 		System.out.print("Write a virus name >");
 		name = in.nextLine().trim();
 		virus.setName(name);
@@ -140,6 +157,7 @@ public class Pandemic {
 			populationsInfected++;
 		}
 		
+		cls();
 		System.out.println("Population size: " + populationSize);
 		System.out.println("Total number of infections: " + infectionsTotal);
 		System.out.println("Number of populations infected: " + populationsInfected);
@@ -185,6 +203,7 @@ public class Pandemic {
 	public static void printResults(Sample s, Virus v, int infections) {
 		int populationSize = s.getPopulationSize();
 		
+		cls();
 		System.out.println("Population size: " + populationSize);
 		System.out.println("Total number of infections: " + infections);
 		System.out.println(v.getName() + " virus's infection rate: " +
@@ -227,6 +246,7 @@ public class Pandemic {
 				Virus virus2 = new Virus();
 				createSample(sample2);
 				createVirus(virus2);
+				System.out.println("Calculating and spreading the virus...");
 				spreadVirusExtinction(sample2, virus2);
 				return true;
 			case "4": // exit

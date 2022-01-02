@@ -1,25 +1,25 @@
-/**
- * 
- */
 package pandemic;
+
 
 /**
  * Sample class represents a population where the virus spreads
  * in days and groups and therefore causes pandemic.
+ * Two-dimensional array where x = days, y = animals/humans per day,
+ * 0 is healthy and 1 is infected, e.g. where one infected in Day 1:
  * <EXAMPLE>
- * table = { 
+ * int[][] sampleTableExample = { 
  * {0, 0, 0, 0},
- * {0, 0, 0, 0},
+ * {1, 0, 0, 0},
  * {0, 0, 0, 0} };
  * </EXAMPLE>
- * @author antiik.dev; https://github.com/antiikdev
+ * @author www.antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
  */
 public class Sample {
 	
 	private String name = "Unknown sample";
 	private final static int minSize = 3;
-	private final static int maxSize = 13;
+	private final static int maxSize = 20;
 	// Matrix of "people" where 0 is healthy and 1 infected by virus
 	private int[][] sampleTable;
 
@@ -82,6 +82,24 @@ public class Sample {
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * Minimum size of the table
+	 * @return min size of the sample
+	 */
+	public int getMinSize() {
+		return Sample.minSize;
+	}
+	
+	
+	/**
+	 * Maximum size of the table
+	 * @return max size of the sample
+	 */
+	public int getMaxSize() {
+		return Sample.maxSize;
 	}
 	
 	

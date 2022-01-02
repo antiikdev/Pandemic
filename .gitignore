@@ -1,0 +1,17 @@
+#JAVA
+
+# Compiled class file
+*.class
+
+# Package Files
+*.jar
+
+# Eclipse
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
