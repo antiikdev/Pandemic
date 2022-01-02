@@ -153,11 +153,21 @@ public class Sample {
 	}
 	
 	
+	/**
+	 * Sets sample name
+	 * @param name of the sample
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
 	
+	/**
+	 * Sets table
+	 * @param d days of the sample
+	 * @param m members of animals/humans per day in the sample
+	 * @param infected how many people infected in Day1
+	 */
 	public void setTable(int d, int m, int infected) {
 		sampleTable = new int[m][d];
 		initializeSample(infected);

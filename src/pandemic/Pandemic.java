@@ -14,11 +14,9 @@ import java.util.Scanner;
  * TODO: Ideas to continue the development:
  * - check concepts and naming, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
- * - randomize a new virus with a random infection rate
  * - print picture of number of cases spreding (non-linear)
- * - develop spreadVirus-method which is now non-linear O(n^2) and therefore slow
+ * - if possible to develop spreadVirus-method not non-linear O(n^2)
  * - add try-catches to new class creation methods
- * - automated min. and max. values presentation in the UI
  */
 public class Pandemic {
 	
@@ -91,6 +89,7 @@ public class Pandemic {
 	
 	/**
 	 * Creates a new sample of animals/humans for the pandemic
+	 * @param sample of the population created
 	 */
 	public static void createSample(Sample sample) {
 		Scanner in = new Scanner(System.in);
@@ -122,6 +121,7 @@ public class Pandemic {
 	
 	/**
 	 * Creates a new virus
+	 * @param virus that is created
 	 */
 	public static void createVirus(Virus virus) {
 		Scanner in = new Scanner(System.in);
@@ -170,6 +170,7 @@ public class Pandemic {
 	
 	/**
 	 * Asks user to press Enter key to continue...
+	 * Source: Stackoverflow, user "E235"
 	 */
 	 private static void pressEnterToContinue()
 	 { 
@@ -218,7 +219,7 @@ public class Pandemic {
 	 * @return true if continue to use, false if exit
 	 */
 	public static boolean menuSelect() {
-		// TODO: Clear console in Java not working properly
+		// Note: Clear console works in command line, not in Eclipse
 		cls();
 		System.out.println(" Pandemic - simple simulation -");
 		System.out.println("1) Instructions");
