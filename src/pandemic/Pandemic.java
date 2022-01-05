@@ -12,11 +12,12 @@ import java.util.Scanner;
  */
 /** 
  * TODO: Ideas to continue the development:
+ * - ONGOING DEV: - printStatistics(); // number of all cases spreding (non-linear)
  * - check concepts and naming, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
- * - print picture of number of cases spreding (non-linear)
  * - if possible to develop spreadVirus-method not non-linear O(n^2)
  * - add try-catches to new class creation methods
+ * - Day 1 cases also to spread?
  */
 public class Pandemic {
 	
@@ -210,7 +211,19 @@ public class Pandemic {
 		System.out.println(v.getName() + " virus's infection rate: " +
 					v.getInfectionRate());
 		s.printSample();
+		printStatistics();
 		pressEnterToContinue();
+	}
+	
+	
+	
+	/**
+	 * Prints all statistics from certain range of cases
+	 * TODO: edit, needs data of all the cases saved in an array
+	 */
+	public static void printStatistics() {
+		System.out.println();
+		System.out.println("*statistics*");
 	}
 	
 	
