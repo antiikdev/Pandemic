@@ -1,5 +1,6 @@
 package pandemic;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -151,10 +152,12 @@ public class Pandemic {
 		int populationSize = s.getPopulationSize();
 		int infectionsTotal = 0;
 		int populationsInfected = 0;
+		int[] infectionArray = new int[s.getPopulationSize() * 2]; // bigger array x 2
 		
 		// While: how many infections required before stopping pandemics
 		while ( infectionsTotal < populationSize ) {
 			infectionsTotal = spreadVirus(s, v);
+			infectionArray[infectionsTotal] += 1; // how many infections per event saved
 			populationsInfected++;
 		}
 		
@@ -165,6 +168,7 @@ public class Pandemic {
 		System.out.println(v.getName() + " virus's infection rate: " +
 				v.getInfectionRate());
 		s.printSample();
+		printStatistics(infectionArray);
 		pressEnterToContinue();
 	}
 	
@@ -190,7 +194,7 @@ public class Pandemic {
 	 */
 	public static void cls() {
 		try {
-			new ProcessBuilder("cmd", "/c","cls").inheritIO().start().waitFor();
+			new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor();
 		} catch (Exception ex) {
 			System.out.println("Error:" + ex);
 		}
@@ -211,7 +215,6 @@ public class Pandemic {
 		System.out.println(v.getName() + " virus's infection rate: " +
 					v.getInfectionRate());
 		s.printSample();
-		printStatistics();
 		pressEnterToContinue();
 	}
 	
@@ -219,11 +222,17 @@ public class Pandemic {
 	
 	/**
 	 * Prints all statistics from certain range of cases
-	 * TODO: edit, needs data of all the cases saved in an array
+	 * @param table of infections per event
 	 */
-	public static void printStatistics() {
-		System.out.println();
+	public static void printStatistics(int[] array) {
+		String star = "*";
 		System.out.println("*statistics*");
+		Arrays.sort(array);
+		// TODO: print x times *(star)
+		for (int i = 0; i < array.length; i++) {
+			// star.repeat(array[i]);
+			new String(new char[array[i]]).replace("\0", star);
+		}
 	}
 	
 	
