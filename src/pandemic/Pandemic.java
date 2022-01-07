@@ -13,7 +13,9 @@ import java.util.Scanner;
  */
 /** 
  * TODO: Ideas to continue the development:
- * - ONGOING DEV: - printStatistics(); // number of all cases spreding (non-linear)
+ * - ONGOING DEV: printStatistics();
+ * - ONGOING DEV: Menu selection to run "quick pandemic leading to extinction"
+ * - remove vertical infections if unnecessary
  * - check concepts and naming, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
  * - if possible to develop spreadVirus-method not non-linear O(n^2)
@@ -219,20 +221,41 @@ public class Pandemic {
 	}
 	
 	
-	
 	/**
 	 * Prints all statistics from certain range of cases
 	 * @param table of infections per event
 	 */
 	public static void printStatistics(int[] array) {
 		String star = "*";
+		String repeat;
+		int maxValue = 0;
+		maxValue = findMaxValue(array);
+		Arrays.sort(array); // Array sorted for printing
+		
+		// TODO: print x times *(star): scale e.g. with max value
 		System.out.println("*statistics*");
-		Arrays.sort(array);
-		// TODO: print x times *(star)
 		for (int i = 0; i < array.length; i++) {
 			// star.repeat(array[i]);
-			new String(new char[array[i]]).replace("\0", star);
+			if ( array[i] > 0 ) {
+				repeat = new String(new char[array[i]]).replace("\0", star);
+				if ( i < 10 ) System.out.print("0" + i + ": ");
+				else System.out.print(i + ": ");
+				System.out.println(repeat);
+			}
 		}
+	}
+	
+	
+	/**
+	 * Finds maximum value from an integer array
+	 * @return maximum value int
+	 */
+	public static int findMaxValue(int[] array) {
+		int maxValue = -Integer.MIN_VALUE;
+		for (int i = 0; i < array.length; i++) {
+			if ( array[i] > maxValue ) maxValue = array[i];
+		}
+		return maxValue;
 	}
 	
 	
@@ -247,7 +270,8 @@ public class Pandemic {
 		System.out.println("1) Instructions");
 		System.out.println("2) Start one pandemic");
 		System.out.println("3) Start pandemics until extinction");
-		System.out.println("4) Exit");
+		System.out.println("4) Start -quick- pandemics until extinction (10,10,3,30%)");
+		System.out.println("5) Exit");
 		System.out.print("Write option number and press Enter-key >");
 		
 		// Scanner to read user input
@@ -272,7 +296,13 @@ public class Pandemic {
 				System.out.println("Calculating and spreading the virus...");
 				spreadVirusExtinction(sample2, virus2);
 				return true;
-			case "4": // exit
+			case "4": // Start -quick- pandemics until extinction
+				Sample sample3 = new Sample("Village", 10, 10, 3);
+				Virus virus3 = new Virus("The Evil", 30);
+				System.out.println("Calculating and spreading the virus...");
+				spreadVirusExtinction(sample3, virus3);
+				return true;
+			case "5": // exit
 				return false;
 			default:
 				return true;
