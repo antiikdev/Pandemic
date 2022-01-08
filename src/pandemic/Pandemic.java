@@ -228,18 +228,25 @@ public class Pandemic {
 	public static void printStatistics(int[] array) {
 		String star = "*";
 		String repeat;
-		int maxValue = 0;
-		maxValue = findMaxValue(array);
-		Arrays.sort(array); // Array sorted for printing
+		int maxValue = findMaxValue(array);
+		int ratio = 20; // how many stars max
+		double numberOfStars = 0.0;
+		// TODO: if not sorted normally distributed (false), with sorted non-linear
+		// Arrays.sort(array); // Array sorted for printing
 		
-		// TODO: print x times *(star): scale e.g. with max value
 		System.out.println("*statistics*");
 		for (int i = 0; i < array.length; i++) {
 			// star.repeat(array[i]);
 			if ( array[i] > 0 ) {
-				repeat = new String(new char[array[i]]).replace("\0", star);
-				if ( i < 10 ) System.out.print("0" + i + ": ");
-				else System.out.print(i + ": ");
+				double rate = (double)array[i] / (double)maxValue;
+				// System.out.print(rate + " ");
+				numberOfStars = ratio * rate;
+				if ( rate == 1 ) numberOfStars = ratio;
+				// System.out.print(number + " ");
+				
+				repeat = new String(new char[(int)numberOfStars]).replace("\0", star);
+				// if ( i < 10 ) System.out.print("0" + i + ": ");
+				System.out.print(i + ": ");
 				System.out.println(repeat);
 			}
 		}
