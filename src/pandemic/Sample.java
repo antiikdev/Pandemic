@@ -5,7 +5,7 @@ package pandemic;
  * Sample class represents a population where the virus spreads
  * in days and groups and therefore causes pandemic.
  * Two-dimensional array where x = days, y = animals/humans per day,
- * 0 is healthy and 1 is infected, e.g. where one infected in Day 1:
+ * 0 is healthy and 1 is infected, e.g. where one infected member in Day 1:
  * <EXAMPLE>
  * int[][] sampleTableExample = { 
  * {0, 0, 0, 0},

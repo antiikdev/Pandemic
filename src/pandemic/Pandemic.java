@@ -1,6 +1,5 @@
 package pandemic;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -9,16 +8,16 @@ import java.util.Scanner;
  * Stopping outbreaks", New England Complex Systems Institute.
  * Available online: https://necsi.edu/pandemic-math
  * @author www.antiik.dev; https://github.com/antiikdev
- * @version 29 Dec 2021
+ * @version 8 Jan 2022
  */
 /** 
  * TODO: Ideas to continue the development:
- * - ONGOING DEV: printStatistics();
  * - ONGOING DEV: Menu selection to run "quick pandemic leading to extinction"
+ * - printStatistics() method distribution to print non-linear (now normal dist.)
  * - remove vertical infections if unnecessary
- * - check concepts and naming, e.g. math of R-number
+ * - check concepts, naming, relevant math, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
- * - if possible to develop spreadVirus-method not non-linear O(n^2)
+ * - if possible to develop spreadVirus-method to not non-linear O(n^2)
  * - add try-catches to new class creation methods
  * - Day 1 cases also to spread?
  */
@@ -86,7 +85,7 @@ public class Pandemic {
 	 */
 	public static void printInstructions() {
 		System.out.println("Pandemic program is a simplified simulation " + 
-				"of virus spreading in a sample population.\n" +
+				"of virus spreading in a limited sample population.\n" +
 				"Play once for single pandemic or until population extinction");
 	}
 	
@@ -206,6 +205,7 @@ public class Pandemic {
 	/**
 	 * Prints one pandemic matrix results
 	 * @param s sample
+	 * @param v virus
 	 * @param infections total occured
 	 */
 	public static void printResults(Sample s, Virus v, int infections) {
@@ -223,7 +223,7 @@ public class Pandemic {
 	
 	/**
 	 * Prints all statistics from certain range of cases
-	 * @param table of infections per event
+	 * @param array of infections per event
 	 */
 	public static void printStatistics(int[] array) {
 		String star = "*";
@@ -231,12 +231,13 @@ public class Pandemic {
 		int maxValue = findMaxValue(array);
 		int ratio = 20; // how many stars max
 		double numberOfStars = 0.0;
-		// TODO: if not sorted normally distributed (false), with sorted non-linear
-		// Arrays.sort(array); // Array sorted for printing
+		// NOTE: if not sorted: normally distributed (false); with sorted: non-linear
+		// Arrays.sort(array); // Array sorted
 		
 		System.out.println("*statistics*");
+		System.out.println("Warning: non-linear dist. presenter her as normally distributed");
+		System.out.println("Infections / times: distribution");
 		for (int i = 0; i < array.length; i++) {
-			// star.repeat(array[i]);
 			if ( array[i] > 0 ) {
 				double rate = (double)array[i] / (double)maxValue;
 				// System.out.print(rate + " ");
@@ -246,7 +247,7 @@ public class Pandemic {
 				
 				repeat = new String(new char[(int)numberOfStars]).replace("\0", star);
 				// if ( i < 10 ) System.out.print("0" + i + ": ");
-				System.out.print(i + ": ");
+				System.out.print(i + " / " + array[i] + ": ");
 				System.out.println(repeat);
 			}
 		}
@@ -255,6 +256,7 @@ public class Pandemic {
 	
 	/**
 	 * Finds maximum value from an integer array
+	 * @param array of infections
 	 * @return maximum value int
 	 */
 	public static int findMaxValue(int[] array) {
@@ -318,7 +320,7 @@ public class Pandemic {
 	
 	
 	/**
-	 * Main to start the program
+	 * Main to start the program menu
 	 * @param args not in use
 	 */
 	public static void main(String[] args) {
