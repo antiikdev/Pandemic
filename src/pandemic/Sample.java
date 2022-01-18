@@ -14,6 +14,10 @@ package pandemic;
  * </EXAMPLE>
  * @author www.antiik.dev; https://github.com/antiikdev
  * @version 29 Dec 2021
+ * Copyright (c) 2022, Antiikdev
+ * All rights reserved.
+ * This source code is licensed under the MIT-style license found in the
+ * LICENSE file in the root directory of this source tree. 
  */
 public class Sample {
 	
