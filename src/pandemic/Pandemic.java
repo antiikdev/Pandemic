@@ -16,7 +16,6 @@ import java.util.Scanner;
  */
 /** 
  * TODO: Ideas to continue the development:
- * - ONGOING DEV: Menu selection to run "quick pandemic leading to extinction"
  * - printStatistics() method distribution to print non-linear (now normal dist.)
  * - remove vertical infections if unnecessary
  * - check concepts, naming, relevant math, e.g. math of R-number
@@ -239,7 +238,8 @@ public class Pandemic {
 		// Arrays.sort(array); // Array sorted
 		
 		System.out.println("*statistics*");
-		System.out.println("Warning: non-linear dist. presenter her as normally distributed");
+		System.out.println("Warning: non-linear dist. by time and consequences +"
+				+ "presented here as normally distributed event cases");
 		System.out.println("Infections / times: distribution");
 		for (int i = 0; i < array.length; i++) {
 			if ( array[i] > 0 ) {
