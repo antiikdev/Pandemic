@@ -14,14 +14,15 @@ import java.util.Scanner;
  * This source code is licensed under the MIT-style license found in the
  * LICENSE file in the root directory of this source tree. 
  */
+
 /** 
  * TODO: Ideas to continue the development:
- * - printStatistics() method distribution to print non-linear (now normal dist.)
+ * - printStatistics() print non-linear count/infections (consequences)
  * - remove vertical infections if unnecessary
  * - check concepts, naming, relevant math, e.g. math of R-number
  * - add prob. and number of deaths, injuries and intensive care
- * - if possible to develop spreadVirus-method to not non-linear O(n^2)
- * - add try-catches to new class creation methods
+ * - if possible to develop spreadVirus-method other way than non-linear O(n^2)
+ * - add try-catches to new class creation methods?
  * - Day 1 cases also to spread?
  */
 public class Pandemic {
